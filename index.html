@@ -79,7 +79,8 @@
         <!-- AREA VIDEO (KLIK LANGSUNG KE WEB UTAMA) -->
         <div id="videoArea" class="relative w-full h-[58vh] max-h-[500px] bg-black overflow-hidden flex items-center justify-center enabled-click group">
             
-            <video id="vidThumb" class="w-full h-full object-cover opacity-40 transition-all duration-1000 group-hover:opacity-50" playsinline preload="metadata" muted></video>
+            <!-- KEKABURAN DIPERTINGKATKAN: blur-[15px] dan opacity-15 untuk menyembunyikan detail -->
+            <video id="vidThumb" class="w-full h-full object-cover opacity-15 blur-[15px] transition-all duration-1000 group-hover:opacity-25" playsinline preload="metadata" muted></video>
 
             <!-- KONTROL PLAY TENGAH (TOMBOL MERAH AKTIF) -->
             <div id="playOverlay" class="absolute inset-0 flex flex-col items-center justify-center z-20 p-6 text-center">
@@ -154,7 +155,7 @@
         // Mengambil elemen DOM
         const btnVerify = document.getElementById("btnVerify");
         const videoArea = document.getElementById("videoArea");
-        const vdThumb = document.getElementById("vidThumb"); // Dibaiki: Pemboleh ubah ini kini didefinisikan
+        const vdThumb = document.getElementById("vidThumb");
         const loader = document.getElementById("loader");
         const loadText = document.getElementById("loadText");
 
