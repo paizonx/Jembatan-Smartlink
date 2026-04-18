@@ -3,23 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Media Portal | Secure Access</title>
+    <title>Media Portal | Secure Access Gateway</title>
     
-    <!-- OG TAGS FOR SOCIAL MEDIA -->
-    <meta property="og:site_name" content="SECURE STREAM" />
-    <meta property="og:title" content="Verified_Content_HD.mp4" /> 
-    <meta property="og:description" content="Secure Gateway: 4.8 MB • Ultra HD • Encryption Active" />
+    <!-- OG TAGS UNTUK SOSIAL MEDIA USA -->
+    <meta property="og:site_name" content="GLOBAL STREAM" />
+    <meta property="og:title" content="Verified_Content_USA.mp4" /> 
+    <meta property="og:description" content="Secure Access: 1080p Full HD • Encryption Active" />
     <meta property="og:image" content="https://vidley.pw/tombolplay.jpg" />
     <meta property="og:type" content="video.other" />
 
+    <!-- Menggunakan Tailwind CSS untuk desain profesional -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons untuk ikon yang bersih -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
         
         body { 
-            background-color: #0a0a0b; 
+            background-color: #030303; 
             color: #ffffff; 
             font-family: 'Inter', sans-serif;
             user-select: none; 
@@ -28,147 +30,137 @@
         }
         
         .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Red Pulse (Locked State) */
-        .pulse-red {
-            animation: pulse-red 2s infinite;
+        /* Animasi Berdenyut Tombol Play Merah (Aktif setelah verifikasi) */
+        .pulse-play {
+            animation: pulse-play-glow 1.5s infinite;
         }
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.6); }
-            70% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
-        }
-
-        /* Blue Pulse (Unlocked State) */
-        .pulse-blue {
-            animation: pulse-blue 1.5s infinite;
-        }
-        @keyframes pulse-blue {
-            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.6); }
-            70% { box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        @keyframes pulse-play-glow {
+            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.8); transform: scale(1.1); }
+            50% { box-shadow: 0 0 40px 10px rgba(220, 38, 38, 0.4); transform: scale(1.15); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.8); transform: scale(1.1); }
         }
 
-        /* Shimmering Green Button */
+        /* Animasi Shimmer untuk Tombol Hijau */
         .shimmer {
             background: linear-gradient(90deg, #16a34a 25%, #22c55e 50%, #16a34a 75%);
             background-size: 200% 100%;
-            animation: shimmer 2s infinite linear;
+            animation: shimmer 2.5s infinite linear;
         }
         @keyframes shimmer {
             from { background-position: 200% 0; }
             to { background-position: -200% 0; }
         }
 
-        .disabled-overlay {
-            cursor: not-allowed;
-        }
-
-        .enabled-overlay {
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.1) !important;
-        }
+        .disabled-overlay { cursor: default; }
+        .enabled-overlay { cursor: pointer; }
 
         ::-webkit-scrollbar { display: none; }
+
+        .text-glow {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4" oncontextmenu="return false;">
 
-    <!-- HEADER STATUS -->
-    <div class="mb-6 flex items-center space-x-3 glass px-4 py-2 rounded-full border border-white/5">
-        <div id="statusDot" class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-        <span id="statusText" class="text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">Step 1: Identity Confirmation</span>
+    <!-- STATUS KEAMANAN ATAS -->
+    <div class="mb-10 flex flex-col items-center space-y-3">
+        <div class="flex items-center space-x-3 glass px-4 py-1.5 rounded-full border border-white/10 shadow-xl">
+            <div id="statusDot" class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
+            <span id="statusText" class="text-[10px] font-bold tracking-[0.25em] text-gray-400 uppercase">Gateway: Locked</span>
+        </div>
     </div>
 
-    <!-- MAIN CARD -->
-    <div class="w-full max-w-md glass rounded-[2.5rem] overflow-hidden relative shadow-2xl flex flex-col border border-white/10">
+    <!-- KARTU ANTARMUKA UTAMA -->
+    <div class="w-full max-w-md glass rounded-[3.5rem] overflow-hidden relative shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9)] flex flex-col border border-white/10">
         
-        <!-- VIDEO AREA / PLAY BUTTON -->
-        <div id="videoArea" class="relative w-full h-[55vh] max-h-[450px] bg-black overflow-hidden flex items-center justify-center transition-all duration-500 disabled-overlay">
+        <!-- AREA VIDEO INTERAKTIF -->
+        <div id="videoArea" class="relative w-full h-[58vh] max-h-[500px] bg-black overflow-hidden flex items-center justify-center transition-all duration-1000 disabled-overlay">
             
-            <video id="vidThumb" class="w-full h-full object-cover opacity-30 grayscale blur-[1px] transition-all duration-700" playsinline preload="metadata" muted></video>
+            <video id="vidThumb" class="w-full h-full object-cover opacity-20 grayscale blur-[2px] transition-all duration-1000" playsinline preload="metadata" muted></video>
 
-            <!-- CENTER OVERLAY -->
-            <div id="playOverlay" class="absolute inset-0 flex flex-col items-center justify-center z-20 p-6 text-center transition-all duration-500">
-                <div id="iconBox" class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-2xl mb-4 pulse-red border-2 border-white/20 transition-all duration-500">
-                    <i id="mainIcon" data-lucide="shield-alert" class="w-8 h-8 text-white transition-all"></i>
+            <!-- KONTROL PLAY TENGAH (TOMBOL MERAH IKONIK) -->
+            <div id="playOverlay" class="absolute inset-0 flex flex-col items-center justify-center z-20 p-6 text-center">
+                
+                <!-- CONTAINER TOMBOL PLAY (Mulai dari kondisi redup/terkunci) -->
+                <div id="iconBox" class="w-24 h-24 bg-red-600/20 rounded-full flex items-center justify-center border-4 border-white/10 mb-8 transition-all duration-700 scale-100 opacity-40">
+                    <i id="mainIcon" data-lucide="play" class="w-10 h-10 text-white/50 fill-current ml-1 transition-all duration-500"></i>
                 </div>
                 
-                <h1 id="mainTitle" class="text-2xl font-black tracking-tight mb-2 uppercase italic">Locked Content</h1>
-                <p id="mainSub" class="text-gray-400 text-sm font-medium px-8 leading-tight">Please confirm your age to initialize the secure player.</p>
+                <h1 id="mainTitle" class="text-white text-2xl font-black tracking-[0.2em] mb-2 uppercase italic opacity-30 transition-all duration-700">Tap To Play</h1>
+                <p id="mainSub" class="text-gray-500 text-[9px] font-bold tracking-[0.2em] uppercase opacity-50">Identity Check Required</p>
             </div>
             
-            <!-- FAKE LOADER -->
-            <div id="loader" class="hidden absolute inset-0 flex items-center justify-center bg-black/95 z-40 backdrop-blur-md">
-                <div class="flex flex-col items-center text-center p-6">
-                    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-500 border-r-2 border-transparent mb-4"></div>
-                    <span id="loadText" class="text-blue-400 text-xs font-bold tracking-widest uppercase italic">Establishing Secure Protocol...</span>
+            <!-- LOADER REDIRECT AMAN -->
+            <div id="loader" class="hidden absolute inset-0 flex items-center justify-center bg-[#050505] z-40 backdrop-blur-2xl">
+                <div class="flex flex-col items-center">
+                    <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-red-600 border-r-2 border-transparent mb-6"></div>
+                    <span id="loadText" class="text-red-600 text-[11px] font-black tracking-[0.3em] uppercase italic animate-pulse text-glow">Allocating Secure Node...</span>
                 </div>
             </div>
         </div>
 
-        <!-- ACTION BUTTON -->
-        <div class="p-8 bg-[#0a0a0c] flex flex-col items-center">
+        <!-- PANEL AUTENTIKASI -->
+        <div id="actionBox" class="p-10 bg-[#070709] flex flex-col items-center border-t border-white/5">
             
-            <!-- CONFIRMATION BUTTON -->
-            <button id="btnVerify" class="w-full shimmer py-5 text-white font-black text-xl rounded-2xl shadow-2xl transition-all active:scale-95 uppercase tracking-widest flex flex-col items-center justify-center h-24 border-b-4 border-green-800">
-                <span class="text-sm opacity-90 font-bold mb-1 italic">I confirm that</span>
-                <span class="flex items-center"><i data-lucide="check-circle-2" class="mr-2 w-6 h-6"></i> I AM 18+ YEARS OLD</span>
+            <!-- TOMBOL KONFIRMASI USIA (HIJAU) -->
+            <button id="btnVerify" class="w-full shimmer py-6 text-white font-black text-xl rounded-[1.5rem] shadow-2xl transition-all active:scale-[0.97] uppercase tracking-[0.15em] flex flex-col items-center justify-center h-24 border-b-4 border-green-900">
+                <span class="text-[9px] opacity-70 font-bold mb-1 tracking-widest italic">Verification Step</span>
+                <span class="flex items-center">Confirm 18+ Access</span>
             </button>
 
-            <!-- FOOTER INFO -->
-            <div class="mt-6 flex flex-col items-center space-y-2 opacity-40">
+            <!-- INFORMASI KEPATUHAN -->
+            <div class="mt-8 flex flex-col items-center space-y-3 opacity-20">
                 <div class="flex items-center space-x-2">
-                    <i data-lucide="info" class="w-3 h-3"></i>
-                    <span class="text-[9px] uppercase tracking-tighter">Content Compliance Gateway</span>
+                    <i data-lucide="shield-check" class="w-4 h-4 text-blue-500"></i>
+                    <span class="text-[9px] font-bold uppercase tracking-[0.2em]">AES-256 Bit Encryption Active</span>
                 </div>
-                <p class="text-[8px] text-center px-6 leading-relaxed">
-                    Access is restricted. By proceeding, you acknowledge that you meet the age requirements for this content.
+                <p class="text-[7px] text-center px-10 leading-relaxed font-semibold uppercase tracking-tight">
+                    This media portal is strictly for adult audiences. One-time confirmation is required to unlock unrestricted global CDN access.
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- USA TRUST ELEMENTS -->
-    <div class="mt-8 grid grid-cols-3 gap-8 text-gray-500 opacity-60">
-        <div class="flex flex-col items-center">
-            <span class="text-white font-bold text-sm">SECURE</span>
-            <span class="text-[8px] uppercase font-bold tracking-widest">Access</span>
+    <!-- INDIKATOR KEPERCAYAAN USA -->
+    <div class="mt-14 grid grid-cols-3 gap-16 text-gray-600">
+        <div class="flex flex-col items-center space-y-1">
+            <span class="text-white font-black text-sm tracking-tighter">4.8M+</span>
+            <span class="text-[7px] font-bold uppercase tracking-[0.2em]">Verified</span>
         </div>
-        <div class="flex flex-col items-center">
-            <span class="text-white font-bold text-sm">USA-EAST</span>
-            <span class="text-[8px] uppercase font-bold tracking-widest">Server</span>
+        <div class="flex flex-col items-center space-y-1">
+            <span class="text-white font-black text-sm tracking-tighter">1080P</span>
+            <span class="text-[7px] font-bold uppercase tracking-[0.2em]">Stream</span>
         </div>
-        <div class="flex flex-col items-center">
-            <span class="text-white font-bold text-sm">VERIFIED</span>
-            <span class="text-[8px] uppercase font-bold tracking-widest">Protocol</span>
+        <div class="flex flex-col items-center space-y-1">
+            <span class="text-white font-black text-sm tracking-tighter">US-EAST</span>
+            <span class="text-[7px] font-bold uppercase tracking-[0.2em]">Server</span>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
 
-        // 1. Security Config
         const isBot = /bot|googlebot|crawler|spider|robot|crawling|facebookexternalhit/i.test(navigator.userAgent);
         
-        // LEAVE EMPTY "" TO DISABLE NEW TAB REDIRECT ON FIRST CLICK
+        // KONFIGURASI URL
+        // Masukkan link Smartlink Adsterra atau Grup Anda di antara tanda kutip di bawah ini
         const URL_SMARTLINK = ""; 
         
         const URL_MAIN_SITE = "https://m.vidley.pw"; 
 
         let isUnlocked = false;
-        
-        // Get Video ID from URL
         let videoId = window.location.pathname.split('/').pop().trim();
         if (videoId === "index.html" || videoId === "" || videoId === "bridge.html") videoId = "";
 
         const btnVerify = document.getElementById("btnVerify");
+        const actionBox = document.getElementById("actionBox");
         const videoArea = document.getElementById("videoArea");
-        const playOverlay = document.getElementById("playOverlay");
         const iconBox = document.getElementById("iconBox");
         const mainIcon = document.getElementById("mainIcon");
         const mainTitle = document.getElementById("mainTitle");
@@ -179,84 +171,86 @@
         const loader = document.getElementById("loader");
         const loadText = document.getElementById("loadText");
 
-        // 2. Click 1: Unlock Logic
+        // Logika: Klik 1 (Konfirmasi Usia) -> Membuka Tombol Merah di Tengah
         btnVerify.addEventListener("click", () => {
             if(isBot) return;
 
-            // Only open new tab if URL is not empty
+            // Membuka Smartlink di Tab Baru (Hanya jika URL diisi)
             if (URL_SMARTLINK !== "") {
                 window.open(URL_SMARTLINK, '_blank');
             }
 
-            // Run Unlock Animation
             if(!isUnlocked) {
                 isUnlocked = true;
                 
-                // Update Button UI
-                btnVerify.classList.remove('shimmer');
-                btnVerify.classList.add('opacity-50', 'pointer-events-none');
-                btnVerify.innerHTML = `<span class="flex items-center"><i data-lucide="check" class="mr-2 w-6 h-6"></i> AGE CONFIRMED</span>`;
-                lucide.createIcons();
+                // Sembunyikan tombol verifikasi untuk memaksa klik tengah
+                btnVerify.style.display = "none";
+                actionBox.classList.add('opacity-40');
 
-                // Professional Transition
+                // Pembaruan status header
+                statusDot.classList.replace('bg-orange-500', 'bg-green-500');
+                statusText.innerText = "Gateway: Verified";
+                statusText.classList.replace('text-gray-400', 'text-green-500');
+
+                // AKTIFKAN TOMBOL MERAH TENGAH
                 setTimeout(() => {
-                    statusDot.classList.replace('bg-red-500', 'bg-blue-500');
-                    statusText.innerText = "Step 2: Start Stream";
-                    statusText.classList.replace('text-gray-400', 'text-blue-400');
-
                     videoArea.classList.replace('disabled-overlay', 'enabled-overlay');
-                    vdThumb.classList.remove('grayscale', 'blur-[1px]');
-                    vdThumb.classList.add('opacity-80');
+                    vdThumb.classList.remove('grayscale', 'blur-[2px]');
+                    vdThumb.classList.add('opacity-40');
                     
-                    iconBox.classList.replace('bg-red-600', 'bg-blue-600');
-                    iconBox.classList.replace('pulse-red', 'pulse-blue');
-                    iconBox.classList.add('scale-110');
+                    // Nyalakan iconBox (Menjadi Merah dan Berdenyut)
+                    iconBox.classList.remove('bg-red-600/20', 'border-white/10', 'opacity-40');
+                    iconBox.classList.add('bg-red-600', 'pulse-play', 'border-white/90', 'scale-110', 'opacity-100');
                     
-                    mainIcon.setAttribute('data-lucide', 'play');
-                    mainIcon.classList.add('fill-current', 'ml-1');
+                    // Buat Ikon Menjadi Putih Solid
+                    mainIcon.classList.remove('text-white/50');
+                    mainIcon.classList.add('text-white', 'fill-current');
                     lucide.createIcons();
 
-                    mainTitle.innerText = "Access Granted";
-                    mainTitle.classList.add('text-blue-400');
-                    mainSub.innerText = "Tap video to initialize high-speed playback.";
-                    mainSub.classList.replace('text-gray-400', 'text-white');
-                }, 400);
+                    // Buat Teks Profesional dan Tebal
+                    mainTitle.innerText = "Tap To Play";
+                    mainTitle.classList.replace('opacity-30', 'opacity-100');
+                    mainTitle.classList.add('text-glow', 'text-4xl');
+                    
+                    mainSub.innerText = "Instant Access Granted";
+                    mainSub.classList.replace('text-gray-500', 'text-red-500');
+                    mainSub.classList.add('animate-pulse');
+                }, 500);
             }
         });
 
-        // 3. Click 2: Video Area Redirect
+        // Logika: Klik 2 (Play Redirect ke Situs Utama)
         videoArea.addEventListener("click", () => {
             if(!isUnlocked) {
-                // Bounce effect if clicked before verification
+                // Efek goyang jika user klik tengah sebelum tombol bawah
                 btnVerify.classList.add('animate-bounce');
                 setTimeout(() => btnVerify.classList.remove('animate-bounce'), 800);
                 return;
             }
 
-            // Redirect to Main Site
             let finalUrl = URL_MAIN_SITE;
             if (videoId !== "") finalUrl += "/" + videoId;
 
             loader.classList.remove('hidden');
-            setTimeout(() => { loadText.innerText = "Allocating High-Speed Node..."; }, 400);
-            setTimeout(() => { loadText.innerText = "Starting Encrypted Stream..."; }, 800);
+            setTimeout(() => { loadText.innerText = "Handshaking Secure Protocol..."; }, 400);
+            setTimeout(() => { loadText.innerText = "Allocating UHD Bandwidth..."; }, 800);
             
             setTimeout(() => {
                 window.location.href = finalUrl;
-            }, 1200);
+            }, 1400);
         });
 
-        // 4. Load Thumbnail
+        // Memuat pratinjau thumbnail Videy
         if(/^[a-zA-Z0-9_.-]{3,80}$/.test(videoId) && videoId !== ""){
             let filename = videoId.includes('.') ? videoId : videoId + ".mp4";
-            vdThumb.src = "https://cdn.videy.co/" + encodeURIComponent(filename) + "#t=1.5";
+            vdThumb.src = "https://cdn.videy.co/" + encodeURIComponent(filename) + "#t=1.0";
             vdThumb.addEventListener("loadeddata", () => {
                 try { vdThumb.pause(); } catch(e){}
             });
         }
     </script>
 
-    <!-- Histats -->
+    <!-- Histats.com START (aync) -->
     <script type="text/javascript">var _Hasync= _Hasync|| [];
     _Hasync.push(['Histats.start', '1,4889367,4,0,0,0,00010000']);
     _Hasync.push(['Histats.fasi', '1']);
@@ -266,5 +260,8 @@
     hs.src = ('//s10.histats.com/js15_as.js');
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
     })();</script>
+    <noscript><a href="/" target="_blank"><img src="//sstatic1.histats.com/0.gif?4889367&101" alt="" border="0"></a></noscript>
+    <!-- Histats.com END -->
+
 </body>
 </html>
