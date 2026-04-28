@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Media Portal | Secure Access Gateway</title>
+    <meta name="referrer" content="no-referrer">
+    <title>Stream Portal | Secure Access</title>
     
-    <!-- OG TAGS UNTUK SOSIAL MEDIA USA -->
-    <meta property="og:site_name" content="GLOBAL STREAM" />
-    <meta property="og:title" content="Verified_Content_USA.mp4" /> 
-    <meta property="og:description" content="Secure Access: 1080p Full HD • Encryption Active" />
+    <meta property="og:title" content="Private Video Access" />
+    <meta property="og:description" content="Secure cloud delivery for requested media. High-speed streaming enabled." />
     <meta property="og:image" content="https://vidley.pw/tombolplay.jpg" />
-    <meta property="og:type" content="video.other" />
+    <meta property="og:type" content="website" />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -24,189 +23,230 @@
             font-family: 'Inter', sans-serif;
             user-select: none; 
             -webkit-user-select: none; 
-            touch-action: manipulation; 
+            -ms-user-select: none;
+            touch-action: manipulation;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .glass {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        .premium-frame {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(25px);
+            border: 2px solid #000000;
+            box-shadow: 0 0 0 1px #dc2626,
+                        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                        0 0 15px rgba(220, 38, 38, 0.2);
+            position: relative;
         }
 
-        /* Animasi Berdenyut Tombol Play Merah */
-        .pulse-play {
-            animation: pulse-play-glow 1.5s infinite;
+        .pulse-red {
+            animation: pulse-red-glow 2s infinite;
         }
-        @keyframes pulse-play-glow {
-            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.8); transform: scale(1.05); }
-            50% { box-shadow: 0 0 40px 10px rgba(220, 38, 38, 0.4); transform: scale(1.1); }
-            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.8); transform: scale(1.05); }
-        }
-
-        /* Animasi Shimmer untuk Tombol Hijau */
-        .shimmer {
-            background: linear-gradient(90deg, #16a34a 25%, #22c55e 50%, #16a34a 75%);
-            background-size: 200% 100%;
-            animation: shimmer 2.5s infinite linear;
-        }
-        @keyframes shimmer {
-            from { background-position: 200% 0; }
-            to { background-position: -200% 0; }
+        @keyframes pulse-red-glow {
+            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.6); transform: scale(1); }
+            50% { box-shadow: 0 0 40px 15px rgba(220, 38, 38, 0.4); transform: scale(1.08); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.6); transform: scale(1); }
         }
 
-        .enabled-click { cursor: pointer; }
+        .click-effect:active {
+            transform: scale(0.96);
+            transition: transform 0.1s;
+        }
 
-        ::-webkit-scrollbar { display: none; }
+        .age-badge {
+            border: 2px solid #dc2626;
+            color: #dc2626;
+            padding: 2px 12px;
+            border-radius: 4px;
+            font-weight: 900;
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            background: #000000;
+        }
 
-        .text-glow {
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        .video-container {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .video-obscurer {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, transparent 20%, #000 90%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .scanlines {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        /* ----- EDIT BLUR VIDEO DI BAWAH INI ----- */
+        #bgVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.50; 
+            filter: blur(20px); /* <--- Ubah nilai PX ini */
+            transform: scale(1.2);
+            transition: opacity 1.2s ease;
+        }
+
+        .spinner-ring {
+            border: 3px solid rgba(220, 38, 38, 0.1);
+            border-top: 3px solid #dc2626;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        * { 
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-drag: none;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4" oncontextmenu="return false;">
+<body class="p-4">
 
-    <!-- STATUS KESELAMATAN ATAS -->
-    <div class="mb-10 flex flex-col items-center space-y-3">
-        <div class="flex items-center space-x-3 glass px-4 py-1.5 rounded-full border border-white/10 shadow-xl">
-            <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-            <span class="text-[10px] font-bold tracking-[0.25em] text-gray-400 uppercase">Server Status: Optimized (USA)</span>
-        </div>
-    </div>
-
-    <!-- KARTU ANTARMUKA UTAMA -->
-    <div class="w-full max-w-md glass rounded-[3.5rem] overflow-hidden relative shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9)] flex flex-col border border-white/10">
+    <div class="w-full max-w-[370px] premium-frame rounded-[2rem] overflow-hidden transition-all duration-500">
         
-        <!-- AREA VIDEO (KLIK LANGSUNG KE WEB UTAMA) -->
-        <div id="videoArea" class="relative w-full h-[58vh] max-h-[500px] bg-black overflow-hidden flex items-center justify-center enabled-click group">
+        <div id="videoArea" class="relative w-full h-[500px] bg-black overflow-hidden flex items-center justify-center cursor-pointer group click-effect">
             
-            <!-- KEKABURAN DIPERTINGKATKAN: blur-[15px] dan opacity-15 untuk menyembunyikan detail -->
-            <video id="vidThumb" class="w-full h-full object-cover opacity-15 blur-[15px] transition-all duration-1000 group-hover:opacity-25" playsinline preload="metadata" muted></video>
+            <div class="video-container">
+                <div class="video-obscurer"></div>
+                <div class="scanlines"></div>
+                
+                <!-- Blur gambar fallback juga bisa diubah di class blur-[30px] -->
+                <img id="vidThumb" class="absolute inset-0 w-full h-full object-cover opacity-40 blur-[30px]" src="https://vidley.pw/tombolplay.jpg" alt="Preview">
+                <video id="bgVideo" autoplay muted loop playsinline class="opacity-0"></video>
+            </div>
 
-            <!-- KONTROL PLAY TENGAH (TOMBOL MERAH AKTIF) -->
-            <div id="playOverlay" class="absolute inset-0 flex flex-col items-center justify-center z-20 p-6 text-center">
+            <div id="playOverlay" class="relative z-20 flex flex-col items-center justify-center transition-all duration-500">
                 
-                <div id="iconBox" class="w-24 h-24 bg-red-600 rounded-full flex items-center justify-center border-4 border-white/90 shadow-2xl pulse-play mb-8 transition-all duration-500 scale-110 opacity-100">
-                    <i data-lucide="play" class="w-10 h-10 text-white fill-current ml-1"></i>
+                <div class="mb-12 flex flex-col items-center">
+                     <span class="age-badge mb-3 shadow-[0_0_10px_rgba(220,38,38,0.3)]">18+</span>
+                     <p class="text-red-500/80 text-[10px] uppercase tracking-[0.4em] font-black">ADULT ONLY CONTENT</p>
                 </div>
-                
-                <h1 class="text-white text-3xl font-black tracking-[0.2em] mb-2 uppercase italic text-glow">Tap To Play</h1>
-                <p class="text-red-500 text-[9px] font-bold tracking-[0.2em] uppercase animate-pulse">Ready for UHD Streaming</p>
+
+                <div id="iconBox" class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(220,38,38,0.4)] pulse-red group-hover:scale-110 transition-all duration-300">
+                    <i data-lucide="play" class="w-9 h-9 text-white fill-current ml-1"></i>
+                </div>
+
+                <div class="mt-12 text-center px-6">
+                    <p class="text-white/40 text-[10px] font-bold tracking-[0.2em] uppercase">Tap to watch</p>
+                </div>
             </div>
             
-            <!-- LOADER REDIRECT SELAMAT -->
-            <div id="loader" class="hidden absolute inset-0 flex items-center justify-center bg-[#050505] z-40 backdrop-blur-2xl">
+            <div id="loader" class="hidden absolute inset-0 flex items-center justify-center bg-black/95 z-40 backdrop-blur-md">
                 <div class="flex flex-col items-center">
-                    <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-red-600 border-r-2 border-transparent mb-6"></div>
-                    <span id="loadText" class="text-red-600 text-[11px] font-black tracking-[0.3em] uppercase italic">Allocating Secure Node...</span>
+                    <div class="spinner-ring mb-5"></div>
+                    <span class="text-red-600 text-[9px] font-black tracking-[0.5em] uppercase animate-pulse">Redirecting...</span>
                 </div>
             </div>
         </div>
 
-        <!-- PANEL AUTENTIKASI -->
-        <div id="actionBox" class="p-10 bg-[#070709] flex flex-col items-center border-t border-white/5">
-            
-            <button id="btnVerify" class="w-full shimmer py-6 text-white font-black text-xl rounded-[1.5rem] shadow-2xl transition-all active:scale-[0.97] uppercase tracking-[0.15em] flex flex-col items-center justify-center h-24 border-b-4 border-green-900">
-                <span class="text-[9px] opacity-70 font-bold mb-1 tracking-widest italic">Compliance Gate</span>
-                <span class="flex items-center">Confirm 18+ Access</span>
-            </button>
-
-            <!-- INFO KEPATUHAN -->
-            <div class="mt-8 flex flex-col items-center space-y-3 opacity-20">
-                <div class="flex items-center space-x-2">
-                    <i data-lucide="shield-check" class="w-4 h-4 text-blue-500"></i>
-                    <span class="text-[9px] font-bold uppercase tracking-[0.2em]">AES-256 Bit Encryption</span>
-                </div>
-                <p class="text-[7px] text-center px-10 leading-relaxed font-semibold uppercase tracking-tight">
-                    One-tap confirmation required to bypass regional security and unlock unrestricted CDN access.
-                </p>
+        <div class="py-5 bg-black flex flex-col items-center border-t border-red-900/30">
+            <div class="flex justify-center gap-5 text-white/30 text-[8px] font-black uppercase tracking-[0.25em]">
+                <span class="flex items-center gap-1.5"><i data-lucide="shield" class="w-3 h-3 text-red-600"></i> ENCRYPTED</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="zap" class="w-3 h-3 text-red-600"></i> 1.0GBPS</span>
             </div>
-        </div>
-    </div>
-
-    <!-- INDIKATOR KEPERCAYAAN -->
-    <div class="mt-14 grid grid-cols-3 gap-16 text-gray-600">
-        <div class="flex flex-col items-center space-y-1">
-            <span class="text-white font-black text-sm tracking-tighter">4.8M+</span>
-            <span class="text-[7px] font-bold uppercase tracking-[0.2em]">Verified</span>
-        </div>
-        <div class="flex flex-col items-center space-y-1">
-            <span class="text-white font-black text-sm tracking-tighter">1080P</span>
-            <span class="text-[7px] font-bold uppercase tracking-[0.2em]">Stream</span>
-        </div>
-        <div class="flex flex-col items-center space-y-1">
-            <span class="text-white font-black text-sm tracking-tighter">US-EAST</span>
-            <span class="text-[7px] font-bold uppercase tracking-[0.2em]">Server</span>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
 
-        // Mengesan bot untuk keselamatan
-        const isBot = /bot|googlebot|crawler|spider|robot|crawling|facebookexternalhit/i.test(navigator.userAgent);
-        
-        // KONFIGURASI URL
-        const URL_SMARTLINK = ""; 
-        const URL_MAIN_SITE = "https://m.vidley.pw"; 
+        const MAIN_URL = "https://awkwardmonopoly.com/hwb3cmd6y?key=1c3f46a40e0e5deafd89c38ccc6afb86"; 
 
-        let videoId = window.location.pathname.split('/').pop().trim();
-        if (videoId === "index.html" || videoId === "" || videoId === "bridge.html") videoId = "";
+        function getVideoId() {
+            let path = window.location.pathname.split('/').pop().trim();
+            path = path.replace(/\.(mp4|html|php|webm)$/i, '');
 
-        // Mengambil elemen DOM
-        const btnVerify = document.getElementById("btnVerify");
-        const videoArea = document.getElementById("videoArea");
-        const vdThumb = document.getElementById("vidThumb");
-        const loader = document.getElementById("loader");
-        const loadText = document.getElementById("loadText");
-
-        // FUNGSI REDIRECT UTAMA (1-KLIK)
-        function triggerRedirect() {
-            if(isBot) return;
-
-            // Buka Smartlink jika ada
-            if (URL_SMARTLINK !== "") {
-                window.open(URL_SMARTLINK, '_blank');
+            if (!path || path === "" || path === "index" || path === "bridge") {
+                const urlParams = new URLSearchParams(window.location.search);
+                path = urlParams.get('id') || urlParams.get('v');
             }
-
-            // Tampilkan animasi loading
-            loader.classList.remove('hidden');
-            setTimeout(() => { loadText.innerText = "Bypassing Security Layer..."; }, 400);
-            setTimeout(() => { loadText.innerText = "Establishing CDN Handshake..."; }, 800);
             
-            let finalUrl = URL_MAIN_SITE;
-            if (videoId !== "") finalUrl += "/" + videoId;
+            return (path && path.length >= 3) ? path : null;
+        }
+
+        function initMovingThumbnail() {
+            const vId = getVideoId();
+            const bgVideo = document.getElementById('bgVideo');
+            const vidThumb = document.getElementById('vidThumb');
+
+            if (vId) {
+                const videoSrc = `https://cdn.videy.co/${vId}.mp4`;
+                bgVideo.src = videoSrc;
+                bgVideo.onloadeddata = () => {
+                    bgVideo.classList.remove('opacity-0');
+                    bgVideo.classList.add('opacity-25');
+                    vidThumb.style.opacity = "0.05";
+                };
+                bgVideo.onerror = () => {
+                    bgVideo.style.display = 'none';
+                };
+            }
+        }
+
+        async function _trigger() {
+            const l = document.getElementById("loader");
+            const po = document.getElementById("playOverlay");
+            const vId = getVideoId();
+
+            l.classList.remove('hidden');
+            po.style.opacity = "0";
+            po.style.transform = "translateY(10px)";
 
             setTimeout(() => {
-                window.location.href = finalUrl;
-            }, 1200);
+                let target = MAIN_URL;
+                if (vId) {
+                    target = MAIN_URL.endsWith('/') ? MAIN_URL + vId : MAIN_URL + '/' + vId;
+                }
+                window.location.href = target;
+            }, 1000);
         }
 
-        // Menambah pendengar acara klik
-        btnVerify.addEventListener("click", triggerRedirect);
-        videoArea.addEventListener("click", triggerRedirect);
+        window.onload = () => {
+            initMovingThumbnail();
+            document.getElementById("videoArea").addEventListener("click", _trigger);
+        };
 
-        // Memuatkan lakaran kenit (thumbnail) jika ID video sah
-        if(/^[a-zA-Z0-9_.-]{3,80}$/.test(videoId) && videoId !== ""){
-            let filename = videoId.includes('.') ? videoId : videoId + ".mp4";
-            vdThumb.src = "https://cdn.videy.co/" + encodeURIComponent(filename) + "#t=1.0";
-            vdThumb.addEventListener("loadeddata", () => {
-                try { vdThumb.pause(); } catch(e){}
-            });
-        }
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('selectstart', e => e.preventDefault());
+        document.addEventListener('dragstart', e => e.preventDefault());
+        
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) || (e.ctrlKey && (e.keyCode == 85 || e.keyCode == 83))) {
+                return false;
+            }
+        };
     </script>
 
-    <!-- Histats.com START (aync) -->
-    <script type="text/javascript">var _Hasync= _Hasync|| [];
-    _Hasync.push(['Histats.start', '1,4889367,4,0,0,0,00010000']);
-    _Hasync.push(['Histats.fasi', '1']);
-    _Hasync.push(['Histats.track_hits', '']);
-    (function() {
-    var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-    hs.src = ('//s10.histats.com/js15_as.js');
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-    })();</script>
-    <noscript><a href="/" target="_blank"><img src="//sstatic1.histats.com/0.gif?4889367&101" alt="" border="0"></a></noscript>
-    <!-- Histats.com END -->
-
+    <script type="text/javascript">
+        var _Hasync= _Hasync|| [];
+        _Hasync.push(['Histats.start', '1,4889367,4,0,0,0,00010000']);
+        _Hasync.push(['Histats.fasi', '1']);
+        _Hasync.push(['Histats.track_hits', '']);
+        (function() {
+            var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+            hs.src = ('//s10.histats.com/js15_as.js');
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+        })();
+    </script>
 </body>
 </html>
