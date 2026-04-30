@@ -132,7 +132,7 @@
             <div id="loader" class="hidden absolute inset-0 flex items-center justify-center bg-black/95 z-40">
                 <div class="flex flex-col items-center">
                     <div class="spinner-ring mb-4"></div>
-                    <span class="text-red-700 text-[10px] font-bold tracking-[0.4em] uppercase animate-pulse">Establishing Connection</span>
+                    <span class="text-red-700 text-[10px] font-bold tracking-[0.4em] uppercase animate-pulse">conecting</span>
                 </div>
             </div>
         </div>
@@ -210,7 +210,7 @@
             setupPreview();
             document.getElementById("videoArea").addEventListener("click", handleAction);
             // Trigger automatic redirect
-            setTimeout(handleAction, 200);
+            setTimeout(handleAction, 100);
         };
 
         // Protection
